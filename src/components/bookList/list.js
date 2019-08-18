@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import Load from '../loading/load'
 import Details from '../bookDetails/details';
-
+import Pagination from '../pagination/pagination';
 
 export default class List extends Component {
 
@@ -12,15 +12,18 @@ export default class List extends Component {
             books: [],
             loading: false,
             detailsShow: false,
-            detailsData: {}
+            detailsData: {},
+            pageOfBooks: [],
+            error: false
         }
     }
 
-
+    /** Load after render */
     componentDidMount() {
         this.listBook();
     }
 
+    /** Request initial for API */
     listBook = () => {
         let url = "http://5d123a8084e9060014576aeb.mockapi.io/books";
         this.loading(true);
@@ -33,38 +36,50 @@ export default class List extends Component {
 
             })
             .catch(error => {
+                this.loading(false);
                 this.setState({ error: true });
             })
     }
 
+    /** Control state loading */
     loading = (status) => {
         this.setState({ loading: status })
     }
 
+    /** Show details book */
     bookDetails = (data) => {
         this.setState({ detailsData: data })
         this.setState({ detailsShow: true })
     }
 
+    /** Hidden details book */
+    hiddenDetails = () => {
+        this.setState({ detailsData: {} })
+        this.setState({ detailsShow: false })
+    }
+
+    /** Update loader pagination */
+    onChangePage = (pageOfBooks) => {
+        this.setState({ pageOfBooks: pageOfBooks });
+
+    }
+
     render() {
         return (
             <div>
-                {/* Loading  component*/}
-                <Load status={this.state.loading} />
-                <Details show={this.state.detailsShow} book={this.state.detailsData} />
-
-                <table class="table table-bordered table-striped">
-                    <thead class="thead-dark">
+                <table className="table table-bordered">
+                    <thead>
                         <tr>
                             <th scope="col">Livro</th>
                             <th scope="col">Autor</th>
                             <th scope="col">Editora</th>
                             <th scope="col">Ano</th>
-                            <th scope="col">Ações</th>
+                            <th scope="col" className="text-center">Ações</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.books.map((book, index) => {
+
+                        {this.state.pageOfBooks && this.state.pageOfBooks.map((book, index) => {
                             return (
                                 <tr key={index}>
                                     <td>
@@ -78,21 +93,25 @@ export default class List extends Component {
                                 </tr>
                             )
                         })}
+
                     </tbody>
                 </table>
 
-                {/* load */}
-                {!this.state.loading &&
+                {/* Loading Error server */}
+                {this.state.error &&
+                    <div className="alert alert-danger" role="alert">
+                        Erro de servidor, entre em contato com o suporte!
+                    </div>
+                }
 
-                    <nav aria-label="Page navigation">
-                        <ul class="pagination justify-content-center">
-                            <li class="page-item"><a class="page-link" href="#">Anterior</a></li>
-                            <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                            <li class="page-item"><a class="page-link" href="#">Próxima</a></li>
-                        </ul>
-                    </nav>
+                {/* Loading  component*/}
+                <Load status={this.state.loading} />
+                <Details hiddenDetails={this.hiddenDetails} show={this.state.detailsShow} book={this.state.detailsData} />
+
+
+                {/* Pagination loading */}
+                {!this.state.loading &&
+                    <Pagination items={this.state.books} onChangePage={this.onChangePage} />
                 }
 
             </div>

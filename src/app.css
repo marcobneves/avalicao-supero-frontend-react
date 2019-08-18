@@ -1,0 +1,14 @@
+body {
+    background-color: #e5e9ec;
+    font-family: 'sans-serif';
+    line-height: 0.5;
+}
+table tbody tr {
+    background-color: white;
+}
+table {
+    border-collapse: initial;
+}
+table tbody tr:hover > td, table tbody tr:hover > th {
+    background-color: #b6d2bf;
+}

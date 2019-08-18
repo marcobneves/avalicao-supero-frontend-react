@@ -14,13 +14,15 @@ export default class Details extends Component {
         }
     }
 
+    /** Watch state change  */
     componentWillReceiveProps(props) {
         this.setState({ show: props.show });
         this.setState({ book: props.book })
     }
-
-    hideModal = () => {
-        this.setState({ show: false });
+    
+    /** Call hidden details */
+    hiddenModal = () => {
+        this.props.hiddenDetails()
     };
 
     render() {
@@ -32,7 +34,7 @@ export default class Details extends Component {
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title">Detalhes</h5>
-                                    <button type="button" onClick={() => this.hideModal()} class="close" data-dismiss="modal" aria-label="Close">
+                                    <button type="button" onClick={() => this.hiddenModal()} class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
@@ -52,7 +54,7 @@ export default class Details extends Component {
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" onClick={() => this.hideModal()} class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                                    <button type="button" onClick={() => this.hiddenModal()} class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                                 </div>
                             </div>
                         </div>
