@@ -6,21 +6,18 @@ export default class Details extends Component {
     constructor() {
         super();
         this.state = {
-            // titulo: '',
-            // preco: '',
-            // autor: '',
-            // autores: []
+            book: {}
         }
     }
 
     details = () => {
-        // let url = "http://5d123a8084e9060014576aeb.mockapi.io/autor";
+        // let url = "http://5d123a8084e9060014576aeb.mockapi.io/book";
         // fetch(url).then(resposta => {
         //     return resposta.json();
         // })
         //     .then(dados => {
         //         // console.log('DADOS', dados);
-        //         this.setState({ autores: dados })
+        //         this.setState({ book: dados })
         //     })
         //     .catch(e => {
         //         console.log('ERRO AO BUSCAR DADOS')
@@ -30,7 +27,9 @@ export default class Details extends Component {
 
     render() {
         return (
-            <div>Details</div>
+            <div>
+                Details
+            </div>
         )
     }
 

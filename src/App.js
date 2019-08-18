@@ -7,9 +7,11 @@ import Details from './components/bookDetails/details'
 function App() {
   return (
     <div className="App">
-      <Search/>
-      <List/>
-      <Details/>
+      <div className="container">
+        <Search />
+        <List />
+        {/* <Details /> */}
+      </div>
     </div>
   );
 }
