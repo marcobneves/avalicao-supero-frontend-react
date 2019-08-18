@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 
 import Search from './components/bookSearch/search'
 import List from './components/bookList/list'
