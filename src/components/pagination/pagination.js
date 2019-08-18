@@ -23,8 +23,8 @@ class Pagination extends Component {
 
     componentWillMount() {
         // set page if items array isn't empty
-        if (this.props.items && this.props.items.length) {
-            this.setPage(this.props.initialPage);
+        if (this.props.items) {
+            this.setPage(this.props.pageCurrent);
         }
     }
 
@@ -45,17 +45,13 @@ class Pagination extends Component {
         }
 
         // get new pager object for specified page
-        pager = this.getPager(items.length, page, pageSize);
-
-        // get new page of items from items array
-        var pageOfItems = items.slice(pager.startIndex, pager.endIndex + 1);
+        pager = this.getPager(items, page, pageSize);
 
         // update state
         this.setState({ pager: pager });
 
         // call change page function in parent component
-        console.log('pageOfItems', pageOfItems)
-        this.props.onChangePage(pageOfItems);
+        this.props.onChangePage(page);
     }
 
     getPager(totalItems, currentPage, pageSize) {

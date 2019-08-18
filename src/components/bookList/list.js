@@ -12,28 +12,29 @@ export default class List extends Component {
             books: [],
             loading: false,
             detailsShow: false,
+            totalCount: null,
             detailsData: {},
-            pageOfBooks: [],
+            pageOfBooks: 1,
             error: false
         }
     }
 
     /** Load after render */
-    componentDidMount() {
+    componentWillMount() {
         this.listBook();
     }
 
     /** Request initial for API */
     listBook = () => {
-        let url = "http://5d123a8084e9060014576aeb.mockapi.io/books";
+        let url = `http://localhost:4000/books?page=${this.state.pageOfBooks}`;
         this.loading(true);
         fetch(url).then(response => {
             return response.json();
         })
             .then(data => {
-                this.setState({ books: data })
+                this.setState({ books: data.books })
+                this.setState({ totalCount: data.totalCount })
                 this.loading(false);
-
             })
             .catch(error => {
                 this.loading(false);
@@ -60,8 +61,11 @@ export default class List extends Component {
 
     /** Update loader pagination */
     onChangePage = (pageOfBooks) => {
-        this.setState({ pageOfBooks: pageOfBooks });
-
+        if(pageOfBooks != this.state.pageOfBooks){
+            this.setState({ pageOfBooks: pageOfBooks },() => {
+                this.listBook()
+            });
+        }
     }
 
     render() {
@@ -78,8 +82,7 @@ export default class List extends Component {
                         </tr>
                     </thead>
                     <tbody>
-
-                        {this.state.pageOfBooks && this.state.pageOfBooks.map((book, index) => {
+                        {this.state.books && this.state.books.map((book, index) => {
                             return (
                                 <tr key={index}>
                                     <td>
@@ -111,7 +114,7 @@ export default class List extends Component {
 
                 {/* Pagination loading */}
                 {!this.state.loading &&
-                    <Pagination items={this.state.books} onChangePage={this.onChangePage} />
+                    <Pagination pageCurrent={this.state.pageOfBooks} items={this.state.totalCount} onChangePage={this.onChangePage} />
                 }
 
             </div>
