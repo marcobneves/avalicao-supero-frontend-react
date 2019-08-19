@@ -12,7 +12,6 @@ export default class Message extends Component {
     }
 
     componentWillReceiveProps(props) {
-        console.log('STATUS', props.status);
         this.setState({ status: props.status })
     }
 

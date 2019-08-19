@@ -51,11 +51,10 @@ class List extends Component {
         /** Get atributes store  redux*/
         const { search, searchType, yearsStart, yearsEnd } = this.props;
 
-        let link = 'http://localhost:4000'
-        // let link = 'https://book-control-supero.herokuapp.com'
+        // let link = 'http://192.168.1.7:4000'
+        let link = 'https://book-api-supero.herokuapp.com'
         let url = `${link}/filter?page=${this.state.pageOfBooks}&yearsStart=${yearsStart}&yearsEnd=${yearsEnd}&search=${search}&searchType=${searchType}`;
        
-
 
         this.loading(true);
         fetch(url).then(response => {

@@ -28,8 +28,8 @@ class Search extends Component {
 
     /** Request filter */
     searchRequest = () => {
-        let link = 'http://localhost:4000'
-        // let link = 'https://book-control-supero.herokuapp.com'
+        // let link = 'http://192.168.1.7:4000'
+        let link = 'https://book-api-supero.herokuapp.com'
 
         let url = `${link}/filter?page=${this.state.pageOfBooks}&yearsStart=${this.state.yearsStart}&yearsEnd=${this.state.yearsEnd}&search=${this.state.search}&searchType=${this.state.searchType}`;
 
