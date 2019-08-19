@@ -27,7 +27,7 @@ class Search extends Component {
     }
     /** Request filter */
     searchRequest = () => {
-        let url = `http://localhost:4000/filter?page=${this.state.pageOfBooks}&yearsStart=${this.state.yearsStart}&yearsEnd=${this.state.yearsEnd}&search=${this.state.search}&searchType=${this.state.searchType}`;
+        let url = `https://book-control-supero.herokuapp.com/filter?page=${this.state.pageOfBooks}&yearsStart=${this.state.yearsStart}&yearsEnd=${this.state.yearsEnd}&search=${this.state.search}&searchType=${this.state.searchType}`;
         this.loading(true);
         fetch(url).then(response => {
             return response.json();
