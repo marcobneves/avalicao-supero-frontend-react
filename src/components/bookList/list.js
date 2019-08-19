@@ -1,10 +1,11 @@
 
 import React, { Component } from 'react';
-import Load from '../loading/load'
+import Message from '../message/message'
 import Details from '../bookDetails/details';
 import Pagination from '../pagination/pagination';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+
 
 class List extends Component {
 
@@ -49,8 +50,13 @@ class List extends Component {
 
         /** Get atributes store  redux*/
         const { search, searchType, yearsStart, yearsEnd } = this.props;
-        let url = `https://book-control-supero.herokuapp.com/filter?page=${this.state.pageOfBooks}&yearsStart=${yearsStart}&yearsEnd=${yearsEnd}&search=${search}&searchType=${searchType}`;
+
+        let link = 'http://localhost:4000'
+        // let link = 'https://book-control-supero.herokuapp.com'
+        let url = `${link}/filter?page=${this.state.pageOfBooks}&yearsStart=${yearsStart}&yearsEnd=${yearsEnd}&search=${search}&searchType=${searchType}`;
        
+
+
         this.loading(true);
         fetch(url).then(response => {
             return response.json();
@@ -93,11 +99,18 @@ class List extends Component {
     }
 
     render() {
-
         return (
             <div>
                 {/* Loading data */}
-                <Load status={this.state.loading} />
+                <Message status={this.state.loading} text="CARREGANDO..." type="alert-warning" />
+
+                {/* Loading Error server */}
+                <Message status={this.state.error} text="Erro de servidor, entre em contato com o suporte!" type="alert-danger" />
+
+                {/* Loading no record data */}
+                {!this.state.books.length && !this.state.error && !this.state.loading &&
+                    <Message status={true} text="Nenhuma informação encontrada" type="alert-danger" />
+                }
 
                 <table className="table table-bordered">
                     <thead>
@@ -128,12 +141,6 @@ class List extends Component {
                     </tbody>
                 </table>
 
-                {/* Loading Error server */}
-                {this.state.error &&
-                    <div className="alert alert-danger" role="alert">
-                        Erro de servidor, entre em contato com o suporte!
-                    </div>
-                }
 
                 {/* Details  component*/}
                 <Details hiddenDetails={this.hiddenDetails} show={this.state.detailsShow} book={this.state.detailsData} />

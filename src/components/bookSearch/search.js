@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import logo from '../../image/supero.svg'
-import Load from '../loading/load'
+import Message from '../message/message'
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { updateSearch, updateType, updateYearsStart, updateYearsEnd } from '../../actions';
@@ -25,9 +25,14 @@ class Search extends Component {
             loading: false
         }
     }
+
     /** Request filter */
     searchRequest = () => {
-        let url = `https://book-control-supero.herokuapp.com/filter?page=${this.state.pageOfBooks}&yearsStart=${this.state.yearsStart}&yearsEnd=${this.state.yearsEnd}&search=${this.state.search}&searchType=${this.state.searchType}`;
+        let link = 'http://localhost:4000'
+        // let link = 'https://book-control-supero.herokuapp.com'
+
+        let url = `${link}/filter?page=${this.state.pageOfBooks}&yearsStart=${this.state.yearsStart}&yearsEnd=${this.state.yearsEnd}&search=${this.state.search}&searchType=${this.state.searchType}`;
+
         this.loading(true);
         fetch(url).then(response => {
             return response.json();
@@ -130,11 +135,10 @@ class Search extends Component {
                                 className="form-control form-control-lg" />
                         </div>
                     </div>
-                    <div className="col text-right">Resultado de busca {`[${this.state.totalCount}]`}</div>
                 </div>
 
                 {/* Loading data */}
-                <Load status={this.state.loading} />
+                <Message status={this.state.loading} text="CARREGANDO..." type="alert-warning" />
             </div>
 
         )
@@ -143,7 +147,10 @@ class Search extends Component {
 }
 
 const mapStateToProps = store => ({
-    search: store.UpdateFilterReducer.search
+    search: store.UpdateFilterReducer.search,
+    totalCount: store.UpdateFilterReducer.totalCount,
+    
+
 });
 
 const mapDispatchToProps = dispatch =>

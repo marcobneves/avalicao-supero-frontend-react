@@ -2,7 +2,7 @@ import {
     UPDATE_SEARCH,
     UPDATE_TYPE,
     UPDATE_YEARS_START,
-    UPDATE_YEARS_END
+    UPDATE_YEARS_END,    
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -35,7 +35,7 @@ export const UpdateFilterReducer = (state = initialState, action) => {
                 ...state,
                 yearsEnd: action.yearsEnd
             };
-          default:
+        default:
             return state;
     }
 };

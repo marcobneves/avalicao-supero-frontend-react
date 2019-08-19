@@ -1,17 +1,18 @@
 
 import React, { Component } from 'react';
-import './load.css'
+import './message.css'
 
-export default class Load extends Component {
+export default class Message extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            status: false
+            status: false,
         }
     }
 
     componentWillReceiveProps(props) {
+        console.log('STATUS', props.status);
         this.setState({ status: props.status })
     }
 
@@ -19,9 +20,9 @@ export default class Load extends Component {
         return (
             <div className="adjustmentTop">
                 {this.state.status &&
-                    <div class="alert alert-warning" role="alert">
-                        CARREGANDO...
-                </div>
+                    <div className={`alert ${this.props.type}`} role="alert">
+                        {this.props.text}
+                    </div>
                 }
             </div>
         )
