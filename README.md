@@ -1,23 +1,61 @@
-# AVALIAÇÃO SUPERO - Sitema para busca de livros.
+# AVALIAÇÃO SUPERO - Sistema para busca de livros.
 
-## Possibilita usuário realizar consulta de livros.
+## Possibilitar usuário realizar consulta de livros.
 
 <a href="https://book-control.herokuapp.com"><img width="900" src="src/image/image2.png" alt="Demo"></a>
 
 
 ## Acesso ao sistema.
-(https://xxxx.herokuapp.com)
+http://imagim.com.br/supero
 
 
 ## GitHub do Backend  em NodeJs.
 https://github.com/marcobneves/avalicao-supero-api-nodejs
 
 
-## Metodos disponíveis
-
+## Métodos disponíveis
+https://book-api-supero.herokuapp.com/
 ```
 GET, POST, FILTER, DELETE, PUT
 ```
+
+## Manual de instalação.
+
+Passo 1: Clonar o projeto.
+```
+git clone git@github.com:marcobneves/avalicao-supero-frontend-react.git
+
+```
+
+
+Passo 2: Baixar as dependências do projeto.
+```
+npm install
+
+ou
+
+yarn 
+```
+
+Passo 3: Comando para executar o projeto.
+```
+npm start
+
+ou
+
+yarn start
+```
+
+(OPCIONAL) Passo 4: Gerando build do projeto. 
+```
+npm run build
+
+ou
+
+yarn build
+```
+Após o (passo 3) será gerado uma pasta build na raiz do projeto, esse pacote será seu build de produção com os códigos minificados.
+
 
 ## Tecnologias.
 
@@ -34,7 +72,7 @@ GET, POST, FILTER, DELETE, PUT
   * Criação da API Rest.
 
 * [MongoDB Atlas](https://www.mongodb.com/)
-  * Bando de dados não relacional.
+  * Banco de dados não relacional.
 
 * [Bootstrap](http://getbootstrap.com/)
   * Criação dos componentes e páginas.
