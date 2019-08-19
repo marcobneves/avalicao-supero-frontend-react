@@ -3,11 +3,13 @@ import React, { Component } from 'react';
 import Load from '../loading/load'
 import Details from '../bookDetails/details';
 import Pagination from '../pagination/pagination';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export default class List extends Component {
+class List extends Component {
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             books: [],
             loading: false,
@@ -20,13 +22,35 @@ export default class List extends Component {
     }
 
     /** Load after render */
-    componentWillMount() {
-        this.listBook();
+    componentDidMount() {
+        if (this.props.items && this.props.items.lenght > 0) {
+            this.setState({ books: this.props.items })
+            this.setState({ totalCount: this.props.totalCount })
+        } else {
+            this.resetVariables();
+            this.listBook();
+        }
+    }
+
+    resetVariables = () => {
+        this.setState({ pageOfBooks: 1 })
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        // reset page if items array has changed
+        if (this.props.items !== prevProps.items) {
+            this.setState({ totalCount: this.props.totalCount })
+            this.setState({ books: this.props.items })
+        }
     }
 
     /** Request initial for API */
     listBook = () => {
-        let url = `http://localhost:4000/books?page=${this.state.pageOfBooks}`;
+
+        /** Get atributes store  redux*/
+        const { search, searchType, yearsStart, yearsEnd } = this.props;
+        let url = `http://localhost:4000/filter?page=${this.state.pageOfBooks}&yearsStart=${yearsStart}&yearsEnd=${yearsEnd}&search=${search}&searchType=${searchType}`;
+       
         this.loading(true);
         fetch(url).then(response => {
             return response.json();
@@ -61,16 +85,20 @@ export default class List extends Component {
 
     /** Update loader pagination */
     onChangePage = (pageOfBooks) => {
-        if(pageOfBooks != this.state.pageOfBooks){
-            this.setState({ pageOfBooks: pageOfBooks },() => {
+        if (pageOfBooks != this.state.pageOfBooks) {
+            this.setState({ pageOfBooks: pageOfBooks }, () => {
                 this.listBook()
             });
         }
     }
 
     render() {
+
         return (
             <div>
+                {/* Loading data */}
+                <Load status={this.state.loading} />
+
                 <table className="table table-bordered">
                     <thead>
                         <tr>
@@ -107,8 +135,7 @@ export default class List extends Component {
                     </div>
                 }
 
-                {/* Loading  component*/}
-                <Load status={this.state.loading} />
+                {/* Details  component*/}
                 <Details hiddenDetails={this.hiddenDetails} show={this.state.detailsShow} book={this.state.detailsData} />
 
 
@@ -123,3 +150,14 @@ export default class List extends Component {
     }
 
 }
+
+const mapStateToProps = store => ({
+    search: store.UpdateFilterReducer.search,
+    searchType: store.UpdateFilterReducer.searchType,
+    yearsStart: store.UpdateFilterReducer.yearsStart,
+    yearsEnd: store.UpdateFilterReducer.yearsEnd
+
+});
+
+
+export default connect(mapStateToProps)(List);

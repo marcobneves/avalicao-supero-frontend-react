@@ -1,14 +1,12 @@
 import React from 'react';
 
-import Search from './components/bookSearch/search'
-import List from './components/bookList/list'
+import StartApp from './components/startApp'
 
 function App() {
   return (
     <div className="App">
       <div className="container">
-        <Search />
-        <List />
+        <StartApp/>
       </div>
     </div>
   );
