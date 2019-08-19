@@ -53,7 +53,7 @@ class List extends Component {
 
         // let link = 'http://192.168.1.7:4000'
         let link = 'https://book-api-supero.herokuapp.com'
-        let url = `${link}/filter?page=${this.state.pageOfBooks}&yearsStart=${yearsStart}&yearsEnd=${yearsEnd}&search=${search}&searchType=${searchType}`;
+        let url = `${link}/filter?page=${this.state.pageOfBooks}&yearsStart=${yearsStart.trim()}&yearsEnd=${yearsEnd.trim()}&search=${search.trim()}&searchType=${searchType}`;
        
 
         this.loading(true);

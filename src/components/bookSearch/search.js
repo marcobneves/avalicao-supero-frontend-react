@@ -31,7 +31,7 @@ class Search extends Component {
         // let link = 'http://192.168.1.7:4000'
         let link = 'https://book-api-supero.herokuapp.com'
 
-        let url = `${link}/filter?page=${this.state.pageOfBooks}&yearsStart=${this.state.yearsStart}&yearsEnd=${this.state.yearsEnd}&search=${this.state.search}&searchType=${this.state.searchType}`;
+        let url = `${link}/filter?page=${this.state.pageOfBooks}&yearsStart=${this.state.yearsStart.trim()}&yearsEnd=${this.state.yearsEnd.trim()}&search=${this.state.search.trim()}&searchType=${this.state.searchType}`;
 
         this.loading(true);
         fetch(url).then(response => {
@@ -72,14 +72,27 @@ class Search extends Component {
         this.setState({ searchType: event.target.value })
     }
 
+
     /** Update store redux */
     updateStatesStore = () => {
         const { updateSearch, updateType, updateYearsStart, updateYearsEnd } = this.props;
+
+        /** Validation string*/
+        this.setState({ search: this.state.search.trim() })
+        this.setState({ yearsStart: this.state.yearsStart.trim() })
+        this.setState({ yearsEnd: this.state.yearsEnd.trim() })
+
         updateSearch(this.state.search);
         updateType(this.state.searchType);
         updateYearsStart(this.state.yearsStart);
         updateYearsEnd(this.state.yearsEnd);
         this.searchRequest();
+    }
+
+    handleKeyPress = (event) => {
+        if (event.key === 'Enter') {
+            this.updateStatesStore();
+        }
     }
 
     render() {
@@ -97,6 +110,7 @@ class Search extends Component {
                                 <option value="3">ISBN</option>
                             </select>
                             <input
+                                onKeyDown={this.handleKeyPress}
                                 value={this.state.search}
                                 onChange={this.setSearch}
                                 type="text"
@@ -121,6 +135,7 @@ class Search extends Component {
                                 <span className="input-group-text">Filtrar ano de publicação</span>
                             </div>
                             <input
+                                onKeyDown={this.handleKeyPress}
                                 value={this.state.yearsStart}
                                 onChange={this.setYearsStart}
                                 type="text"
@@ -128,6 +143,7 @@ class Search extends Component {
                                 className="form-control form-control-lg" />
 
                             <input
+                                onKeyDown={this.handleKeyPress}
                                 value={this.state.yearsEnd}
                                 onChange={this.setYearsEnd}
                                 type="text"
@@ -149,7 +165,7 @@ class Search extends Component {
 const mapStateToProps = store => ({
     search: store.UpdateFilterReducer.search,
     totalCount: store.UpdateFilterReducer.totalCount,
-    
+
 
 });
 
