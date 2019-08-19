@@ -2,7 +2,7 @@
 
 ## Possibilita usuário realizar consulta de livros.
 
-<a href="https://book-control.herokuapp.com"><img width="900" src="image/image2.png" alt="Demo"></a>
+<a href="https://book-control.herokuapp.com"><img width="900" src="src/image/image2.png" alt="Demo"></a>
 
 
 ## Acesso ao sistema.
